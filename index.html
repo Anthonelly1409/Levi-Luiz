@@ -3,18 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aniversário Levi & Luis</title>
-
+<title>Aniversário Levi & Luiz</title>
 <link rel="stylesheet" href="estilos.css">
 </head>
 
 <body>
 
-<!-- CONTAGEM -->
+<!-- BOTÃO DE SOM -->
+<button id="btnSom">🔊 Ativar Música</button>
+
 <div id="balao-estouro">
-    <span id="contador">3</span>
+    <div id="contador"></div>
 </div>
 
+<!-- BALÕES DECORATIVOS -->
+<div class="balao-decor b1"></div>
+<div class="balao-decor b2"></div>
+<div class="balao-decor b3"></div>
+<div class="balao-decor b4"></div>
 
 <!-- CONFETES -->
 <div class="confete c1"></div>
@@ -24,48 +30,34 @@
 <div class="confete c5"></div>
 <div class="confete c6"></div>
 
-<!-- BALÕES DE FUNDO -->
-<div class="balao b1"></div>
-<div class="balao b2"></div>
-<div class="balao b3"></div>
-<div class="balao b4"></div>
-<div class="balao b5"></div>
+<!-- DOCES -->
+<div class="doce d1">🍭</div>
+<div class="doce d2">🍬</div>
+<div class="doce d3">🧁</div>
+<div class="doce d4">🍩</div>
+<div class="doce d5">🍪</div>
 
-<!-- CONVITE -->
 <div class="convite" id="convite">
+    <div class="personagens">
+        <img src="img/tico-teco.png" alt="Tico e Teco">
+    </div>
 
-<div class="personagens">
-    <img src="img/tico-teco.png" alt="Tico e Teco">
+    <h1>Aniversário de 1 Aninho</h1>
+    <p class="sub">Tema Tico e Teco</p>
+    <h2>Levi & Luis</h2>
+
+    <div class="info">📅 15 de Março</div>
+    <div class="info">⏰ 18:00</div>
+    <div class="info">📍 Minha residência</div>
+
+    <p class="rodape">Você é nosso convidado especial!</p>
 </div>
 
-<h1>Aniversário de 1 Aninho</h1>
-<div class="sub">Tema Tico e Teco</div>
-
-<h2>Levi & Luis</h2>
-
-<div class="info">📅 <b>15 de Março</b></div>
-<div class="info">⏰ <b>18:00</b></div>
-<div class="info">📍 <b>Minha residência</b></div>
-
-<div class="rodape">
-Você é nosso convidado especial!
-</div>
-
-</div>
-
-<!-- SONS -->
-<!-- SOM DO ESTOURO -->
 <audio id="pop" src="https://assets.mixkit.co/sfx/preview/mixkit-balloon-pop-2357.mp3"></audio>
-
-<!-- SUA MÚSICA -->
-<audio id="musica" preload="auto" loop>
-    <source src="img/musica.mp3" type="audio/mpeg">
-</audio>
-
-
-
+<audio id="musica" src="img/musica.mp3" preload="auto" loop></audio>
 
 <script>
+
 let numero = 3;
 
 const contador = document.getElementById("contador");
@@ -73,46 +65,49 @@ const balao = document.getElementById("balao-estouro");
 const convite = document.getElementById("convite");
 const pop = document.getElementById("pop");
 const musica = document.getElementById("musica");
+const btnSom = document.getElementById("btnSom");
 
-// volume
 musica.volume = 0.3;
 
-// garantir carregamento
-musica.load();
+let tocando = false;
 
-// função para tocar música
-function iniciarMusica() {
-    musica.play()
-    .then(() => {
-        console.log("Música tocando");
-    })
-    .catch(() => {
-        console.log("Autoplay bloqueado — aguardando toque");
-        document.body.addEventListener("click", () => musica.play(), { once: true });
-    });
-}
+/* BOTÃO LIGA/DESLIGA */
+btnSom.addEventListener("click", () => {
+    if(!tocando){
+        musica.play();
+        btnSom.textContent = "🔈 Pausar Música";
+        tocando = true;
+    } else {
+        musica.pause();
+        btnSom.textContent = "🔊 Ativar Música";
+        tocando = false;
+    }
+});
+
+/* CONTAGEM 3 2 1 */
+contador.textContent = numero;
 
 const tempo = setInterval(() => {
+
     numero--;
 
-    if (numero > 0) {
+    if(numero > 0){
         contador.textContent = numero;
     } else {
+
         clearInterval(tempo);
 
-        contador.style.display = "none";
         balao.classList.add("estourar");
         pop.play();
 
         setTimeout(() => {
             balao.style.display = "none";
             convite.classList.add("mostrar");
-
-            iniciarMusica();
-
         }, 500);
     }
+
 }, 1000);
+
 </script>
 
 </body>
