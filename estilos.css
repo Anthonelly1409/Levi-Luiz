@@ -332,4 +332,18 @@ h1{
 #btnSom:hover{
     transform:scale(1.05);
 }
+.link-convite{
+    margin-top: 20px;
+}
+
+.link-convite a{
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff6a00;
+    text-decoration: underline;
+}
+
+.link-convite a:hover{
+    color: #d94f00;
+}
 
