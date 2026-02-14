@@ -1,3 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aniversário Levi & Luiz</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<!-- BOTÃO DE SOM -->
+<button id="btnSom">🔊 Ativar Música</button>
+
+<div id="balao-estouro">
+    <div id="contador"></div>
+</div>
+
+<!-- BALÕES DECORATIVOS -->
+<div class="balao-decor b1"></div>
+<div class="balao-decor b2"></div>
+<div class="balao-decor b3"></div>
+<div class="balao-decor b4"></div>
+
+<!-- CONFETES -->
+<div class="confete c1"></div>
+<div class="confete c2"></div>
+<div class="confete c3"></div>
+<div class="confete c4"></div>
+<div class="confete c5"></div>
+<div class="confete c6"></div>
+
+<!-- DOCES -->
+<div class="doce d1">🍭</div>
+<div class="doce d2">🍬</div>
+<div class="doce d3">🧁</div>
+<div class="doce d4">🍩</div>
+<div class="doce d5">🍪</div>
+
 <div class="convite" id="convite">
     <div class="personagens">
         <img src="img/tico-teco.png" alt="Tico e Teco">
@@ -12,12 +51,64 @@
     <div class="info">📍 Minha residência</div>
 
     <p class="rodape">Você é nosso convidado especial!</p>
-
-    <!-- LINK -->
-    <p class="link-convite">
-        <a href="https://anthonelly1409.github.io/Convite-Aniversario/" target="_blank">
-            Clique aqui para ver!
-        </a>
-    </p>
-
 </div>
+
+<audio id="pop" src="https://assets.mixkit.co/sfx/preview/mixkit-balloon-pop-2357.mp3"></audio>
+<audio id="musica" src="img/musica.mp3" preload="auto" loop></audio>
+
+<script>
+
+let numero = 3;
+
+const contador = document.getElementById("contador");
+const balao = document.getElementById("balao-estouro");
+const convite = document.getElementById("convite");
+const pop = document.getElementById("pop");
+const musica = document.getElementById("musica");
+const btnSom = document.getElementById("btnSom");
+
+musica.volume = 0.3;
+
+let tocando = false;
+
+/* BOTÃO LIGA/DESLIGA */
+btnSom.addEventListener("click", () => {
+    if(!tocando){
+        musica.play();
+        btnSom.textContent = "🔈 Pausar Música";
+        tocando = true;
+    } else {
+        musica.pause();
+        btnSom.textContent = "🔊 Ativar Música";
+        tocando = false;
+    }
+});
+
+/* CONTAGEM 3 2 1 */
+contador.textContent = numero;
+
+const tempo = setInterval(() => {
+
+    numero--;
+
+    if(numero > 0){
+        contador.textContent = numero;
+    } else {
+
+        clearInterval(tempo);
+
+        balao.classList.add("estourar");
+        pop.play();
+
+        setTimeout(() => {
+            balao.style.display = "none";
+            convite.classList.add("mostrar");
+        }, 500);
+    }
+
+}, 1000);
+
+</script>
+
+</body>
+</html>
